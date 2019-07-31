@@ -2,6 +2,24 @@ import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
+  /**
+   *
+   * @api {post} /users Store a User
+   * @apiName MeetApp
+   * @apiGroup User
+   * @apiSuccess {Integer} id unique ID of user.
+   * @apiSuccess {String}  name  Name of user.
+   * @apiSuccess {String}  email E-mail of user.
+   * @apiSuccess {Boolean} provider Whether true he is a provider service .
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 204 OK
+   *     {
+   *       "id": 1,
+   *       "name": "John Doe",
+   *       "email": "johndoe@domain.com",
+   *       "provider": false
+   *     }
+   */
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
