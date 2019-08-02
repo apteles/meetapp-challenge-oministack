@@ -12,7 +12,7 @@ class UserController {
    * @apiSuccess {String}  email E-mail of user.
    * @apiSuccess {Boolean} provider Whether true he is a provider service .
    * @apiSuccessExample Success-Response:
-   *     HTTP/1.1 204 OK
+   *     HTTP/1.1 201 OK
    *     {
    *       "id": 1,
    *       "name": "John Doe",
@@ -79,7 +79,7 @@ class UserController {
 
     const { id, name } = await user.update(req.body);
 
-    return res.json({ id, name, email });
+    return res.status(201).json({ id, name, email });
   }
 }
 
