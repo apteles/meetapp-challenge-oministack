@@ -1,9 +1,10 @@
-import { parseISO, isBefore, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
-import Mail from '../../lib/Mail';
+import { parseISO, isBefore } from 'date-fns';
 import Subscription from '../models/Subscription';
 import Meetup from '../models/Meetup';
 import User from '../models/User';
+
+import Queue from '../../lib/Queue';
+import SubscriptionMail from '../jobs/SubscriptionMail';
 
 class SubscriptionController {
   async store(req, res) {
@@ -50,21 +51,11 @@ class SubscriptionController {
       meetup_id: meetup.id,
     });
 
-    await Mail.sendMail({
-      to: `${meetup.user.name} <${meetup.user.email}>`,
-      subject: 'Nova inscrição feita pelo Meetup',
-      template: 'subscription',
-      context: {
-        manager: meetup.user.name,
-        title: meetup.title,
-        location: meetup.location,
-        date: format(meetup.date, " dd 'de' MMMM'", {
-          locale: pt,
-        }),
-        user: user.name,
-        email: user.email,
-      },
+    await Queue.add(SubscriptionMail.key, {
+      meetup,
+      user,
     });
+
     return res.json(subscription);
   }
 }
