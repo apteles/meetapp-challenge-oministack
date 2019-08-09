@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
-import { isBefore, parseISO } from 'date-fns';
+import { Op } from 'sequelize';
+import { isBefore, parseISO, startOfDay, endOfDay } from 'date-fns';
 import Meetup from '../models/Meetup';
-import File from '../models/File';
+import User from '../models/User';
 
 class MeetupController {
   /**
@@ -10,37 +11,78 @@ class MeetupController {
    * @apiName Get all Meetups
    * @apiGroup Meetups
    *
+   * @apiParam {page} page Number of page.
+   * @apiParam {Date} date Filter by date. Format: 2019-08-01.
+   *
    * @apiSuccess {Array} Return collection of meetups.
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
-   *     [
-   *         {
+   *   [
+   *    {
+   *      "id": 1,
+   *      "title": "tsete teste teste",
+   *      "description": "some description zzzzz",
+   *      "location": "street xtop number 111000222",
+   *      "date": "2019-08-15T11:00:00.000Z",
+   *      "banner_id": 1,
+   *      "user_id": 6,
+   *      "createdAt": "2019-08-05T08:32:52.094Z",
+   *      "updatedAt": "2019-08-05T21:54:42.728Z",
+   *      "user": {
+   *        "id": 6,
+   *        "name": "Demo Cliente 2",
+   *        "email": "client2@meetapp.com",
+   *        "password_hash": "$2a$08$fhAyKkSM875he2DtgzaLUuOGFD0oIEyq/AvpsKROpBWyiCFDD1rBO",
+   *        "createdAt": "2019-07-24T08:27:33.004Z",
+   *        "updatedAt": "2019-07-24T08:27:33.004Z"
+   *      }
+   *    },
+   *      {
+   *       "id": 3,
+   *       "title": "tsete",
+   *       "description": "some description",
+   *       "location": "street xtop number 000",
+   *       "date": "2019-08-10T11:00:00.000Z",
+   *       "banner_id": 1,
+   *       "user_id": 1,
+   *       "createdAt": "2019-08-06T22:29:57.278Z",
+   *       "updatedAt": "2019-08-06T22:29:57.278Z",
+   *         "user": {
    *           "id": 1,
-   *           "title": "tsete",
-   *           "description": "some description",
-   *           "location": "street xtop number 000",
-   *           "date": "2019-08-01T11:00:00.000Z",
-   *           "banner_id": 1,
-   *           "user_id": 1,
-   *           "createdAt": "2019-08-05T08:32:52.094Z",
-   *           "updatedAt": "2019-08-05T08:32:52.094Z"
-   *         },
-   *         {
-   *           "id": 2,
-   *           "title": "tsete",
-   *           "description": "some description",
-   *           "location": "street xtop number 000",
-   *           "date": "2019-08-01T11:00:00.000Z",
-   *           "banner_id": 1,
-   *           "user_id": 1,
-   *           "createdAt": "2019-08-05T08:38:49.633Z",
-   *           "updatedAt": "2019-08-05T08:38:49.633Z"
+   *           "name": "Demo Cliente",
+   *           "email": "client@meetapp.com",
+   *           "password_hash": "$2a$08$d1qOiE2gT2QPAOJtVO6cfuYQs2VODHYXuk/DrnLgkYpQSGzvrpFl.",
+   *           "createdAt": "2019-07-23T09:56:35.693Z",
+   *           "updatedAt": "2019-07-24T09:17:30.846Z"
    *         }
-   *       ]
+   *    }
+   *  ]
    */
 
   async index(req, res) {
-    const meetups = await Meetup.findAll({ where: { user_id: req.userId } });
+    const where = {};
+    const LIMIT_PER_PAGE = 10;
+    const page = req.query.page || 1;
+
+    if (req.query.date) {
+      const searchDate = parseISO(req.query.date);
+
+      where.date = {
+        [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
+      };
+    }
+
+    const meetups = await Meetup.findAll({
+      where,
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+      ],
+      limit: LIMIT_PER_PAGE,
+      offset: LIMIT_PER_PAGE * page - LIMIT_PER_PAGE,
+    });
 
     res.status(200).json(meetups);
   }
