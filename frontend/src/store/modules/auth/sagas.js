@@ -1,3 +1,21 @@
-import { all } from 'redux-saga/effects';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
 
-export default all([]);
+import { signInSuccess } from './action';
+import api from '~/services/api';
+
+export function* signIn({ payload }) {
+    const { email, password } = payload;
+
+    const response = yield call(api.post, 'sessions', {
+        email,
+        password,
+    });
+
+    const { token, user } = response.data;
+
+    // some logic here
+
+    yield put(signInSuccess(token, user));
+}
+
+export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);
