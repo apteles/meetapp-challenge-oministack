@@ -33,6 +33,12 @@ export const Content = styled.div`
             }
         }
 
+        span {
+            transition: display 0.5s;
+            color: #f94d6a;
+            margin: 5px 0;
+        }
+
         button {
             margin: 5px 0 0;
             height: 44px;
