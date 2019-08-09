@@ -7,7 +7,7 @@ import User from '../models/User';
 class MeetupController {
   /**
    *
-   * @api {get} /meetups Get all Meetups that current user is the manager
+   * @api {get} /meetups Get all Meetups
    * @apiName Get all Meetups
    * @apiGroup Meetups
    *
