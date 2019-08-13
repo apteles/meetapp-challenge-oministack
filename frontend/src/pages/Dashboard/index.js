@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdKeyboardArrowRight } from 'react-icons/md';
+import { MdKeyboardArrowRight, MdAddCircleOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { Container, MeetupList, MeetupItem } from './styles';
@@ -9,7 +9,10 @@ export default function DashBoard() {
         <Container>
             <header>
                 <h1>Meus meetups</h1>
-                <Link to="meetups/new">Novo meetup</Link>
+                <Link to="meetups/new">
+                    <MdAddCircleOutline size="22" color="#fff" />
+                    Novo meetup
+                </Link>
             </header>
             <MeetupList>
                 <MeetupItem>
