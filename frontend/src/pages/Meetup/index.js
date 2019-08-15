@@ -35,7 +35,7 @@ export default function Meetup() {
                     o conteúdo de texto legível de uma página quando estiver
                     examinando sua diagramação. A vantagem de usar Lorem Ipsum é
                     que ele tem uma distribuição normal de letras, ao contrário
-                    de "Conteúdo aqui, conteúdo aqui", fazendo com que ele tenha
+                    de Conteúdo aqui, conteúdo aqui, fazendo com que ele tenha
                     uma aparência similar a de um texto legível.
                 </p>
 

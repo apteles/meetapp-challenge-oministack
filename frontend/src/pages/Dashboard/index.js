@@ -9,7 +9,7 @@ export default function DashBoard() {
         <Container>
             <header>
                 <h1>Meus meetups</h1>
-                <Link to="meetups/new">
+                <Link to="meetup/create">
                     <MdAddCircleOutline size="22" color="#fff" />
                     Novo meetup
                 </Link>
