@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdKeyboardArrowRight, MdAddCircleOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { Container, MeetupList, MeetupItem } from './styles';
+import api from '~/services/api';
 
 export default function DashBoard() {
+    const [meetups, setMeetups] = useState([]);
+
+    useEffect(() => {
+        async function loadMeetups() {
+            const response = await api.get('meetups');
+
+            setMeetups(response.data);
+        }
+
+        loadMeetups();
+    });
+
     return (
         <Container>
             <header>
@@ -15,42 +28,17 @@ export default function DashBoard() {
                 </Link>
             </header>
             <MeetupList>
-                <MeetupItem>
-                    <p>Meetup #01</p>
-                    <div>
-                        <span>27 de Agosto, às 20h</span>
-                        <Link to="/">
-                            <MdKeyboardArrowRight size="22" color="#fff" />
-                        </Link>
-                    </div>
-                </MeetupItem>
-                <MeetupItem>
-                    <p>Meetup #01</p>
-                    <div>
-                        <span>27 de Agosto, às 20h</span>
-                        <Link to="/">
-                            <MdKeyboardArrowRight size="22" color="#fff" />
-                        </Link>
-                    </div>
-                </MeetupItem>
-                <MeetupItem>
-                    <p>Meetup #01</p>
-                    <div>
-                        <span>27 de Agosto, às 20h</span>
-                        <Link to="/">
-                            <MdKeyboardArrowRight size="22" color="#fff" />
-                        </Link>
-                    </div>
-                </MeetupItem>
-                <MeetupItem>
-                    <p>Meetup #01</p>
-                    <div>
-                        <span>27 de Agosto, às 20h</span>
-                        <Link to="/">
-                            <MdKeyboardArrowRight size="22" color="#fff" />
-                        </Link>
-                    </div>
-                </MeetupItem>
+                {meetups.map(meetup => (
+                    <MeetupItem key={meetup.id}>
+                        <p>{meetup.title}</p>
+                        <div>
+                            <span>{meetup.date}</span>
+                            <Link to={`/meetup/${meetup.id}`}>
+                                <MdKeyboardArrowRight size="22" color="#fff" />
+                            </Link>
+                        </div>
+                    </MeetupItem>
+                ))}
             </MeetupList>
         </Container>
     );
