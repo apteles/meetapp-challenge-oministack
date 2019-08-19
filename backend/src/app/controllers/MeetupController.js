@@ -136,7 +136,7 @@ class MeetupController {
 
     const meetup = await Meetup.create(data);
 
-    res.status(201).json(meetup);
+    return res.status(201).json(meetup);
   }
 
   /**
