@@ -5,7 +5,8 @@ import api from '~/services/api';
 import { Container, ImageWrapper } from './styles';
 
 export default function BannerInput() {
-    const { registerField } = useField('');
+    const { defaultValue, registerField } = useField('banner');
+
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
 
@@ -14,7 +15,7 @@ export default function BannerInput() {
     useEffect(() => {
         if (ref.current) {
             registerField({
-                name: 'banner_id',
+                name: 'banner',
                 ref: ref.current,
                 path: 'dataset.file',
             });
@@ -31,7 +32,9 @@ export default function BannerInput() {
         setFile(id);
         setPreview(url);
     }
-
+    if (!defaultValue) {
+        return null;
+    }
     return (
         <Container>
             <label htmlFor="banner">
