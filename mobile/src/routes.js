@@ -1,11 +1,11 @@
-import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import Signin from '~/pages/Signin';
-import Signup from '~/pages/Signup';
+import SignIn from '~/pages/Signin';
+import SignUp from '~/pages/Signup';
 
 export default createAppContainer(
-    createBottomTabNavigator({
-        Signin,
-        Signup
+    createSwitchNavigator({
+        SignIn,
+        SignUp
     })
 );
