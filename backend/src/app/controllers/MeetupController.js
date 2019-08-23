@@ -231,11 +231,11 @@ class MeetupController {
   async show(req, res) {
     const meetup = await Meetup.findByPk(req.params.id, {
       include: [
-        { model: File, as: 'banner', attributes: ['id', 'url', 'path'] },
+        { model: File, as: 'banner', attributes: ['id', 'url', 'path','name'] },
       ],
     });
 
-    return res.json({ meetup });
+    return res.json(meetup);
   }
 }
 
