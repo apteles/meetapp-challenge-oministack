@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text } from 'react-native';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
     Container,
-    Meetup,
     Banner,
     Info,
     Title,
     Time,
     Location,
-    Person
+    Person,
+    Subscription
 } from './styles';
 
-export default function Appointment() {
+export default function Appointment({ data }) {
+    const dateParsed = parseISO(data.date);
+    const dateFormatted = useMemo(
+        () => format(dateParsed, "d 'de' MMMM ', às' h'h'", { locale: pt }),
+        [dateParsed]
+    );
     return (
         <Container>
             <Banner
@@ -21,19 +28,24 @@ export default function Appointment() {
                 }}
             />
             <Info>
-                <Title>John Doe</Title>
+                <Title>{data.title}</Title>
                 <Time>
                     <Icon name="event" size={20} color="#ccc" />
-                    <Text>24 de Junho, às 20h</Text>
+                    <Text>{dateFormatted}</Text>
                 </Time>
                 <Location>
                     <Icon name="location-on" size={20} color="#ccc" />
-                    <Text>Av 24 de Outubro, 2658</Text>
+                    <Text>{data.location}</Text>
                 </Location>
                 <Person>
                     <Icon name="person" size={20} color="#ccc" />
-                    <Text>Organizador: Mary Doe</Text>
+                    <Text>Organizador: {data.user.name}</Text>
                 </Person>
+                <Subscription onPress={() => {}}>
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+                        Realizar inscrição
+                    </Text>
+                </Subscription>
             </Info>
         </Container>
     );

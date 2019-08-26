@@ -2,7 +2,6 @@ import { Alert } from 'react-native';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import api from '~/services/api';
 import { signInSuccess, signFailure } from './actions';
-// import history from '~/services/history';
 
 export function* signIn({ payload }) {
     try {
@@ -14,7 +13,7 @@ export function* signIn({ payload }) {
         });
 
         const { user } = response.data;
-        const { token } = user;
+        const { token } = response.data;
 
         yield put(signInSuccess(token, user));
     } catch (error) {

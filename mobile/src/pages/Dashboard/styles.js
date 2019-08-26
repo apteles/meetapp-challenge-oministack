@@ -16,3 +16,13 @@ export const List = styled.FlatList.attrs({
     contentContainerStyle: { padding: 30 },
     showsVerticalScrollIndicator: false
 })``;
+
+export const SelectionDate = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+
+    margin-top: 20px;
+`;
