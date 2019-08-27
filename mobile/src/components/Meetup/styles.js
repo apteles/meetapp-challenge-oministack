@@ -10,7 +10,6 @@ export const Container = styled.View`
     justify-content: center;
 `;
 
-export const Meetup = styled.View``;
 export const Banner = styled.Image`
     width: 100%;
     height: 200px;

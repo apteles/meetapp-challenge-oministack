@@ -14,7 +14,7 @@ import {
     Subscription
 } from './styles';
 
-export default function Appointment({ data }) {
+export default function Meetup({ data, onSubmit, label }) {
     const dateParsed = parseISO(data.date);
     const dateFormatted = useMemo(
         () => format(dateParsed, "d 'de' MMMM ', às' h'h'", { locale: pt }),
@@ -24,7 +24,7 @@ export default function Appointment({ data }) {
         <Container>
             <Banner
                 source={{
-                    uri: 'https://picsum.photos/id/237/200/300'
+                    uri: data.banner.url
                 }}
             />
             <Info>
@@ -41,9 +41,9 @@ export default function Appointment({ data }) {
                     <Icon name="person" size={20} color="#ccc" />
                     <Text>Organizador: {data.user.name}</Text>
                 </Person>
-                <Subscription onPress={() => {}}>
+                <Subscription onPress={() => onSubmit(data.id)}>
                     <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-                        Realizar inscrição
+                        {label}
                     </Text>
                 </Subscription>
             </Info>

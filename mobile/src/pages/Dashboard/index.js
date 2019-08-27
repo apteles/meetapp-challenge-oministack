@@ -38,6 +38,10 @@ export default function Dashboard() {
         setDate(addDays(date, 1));
     }
 
+    async function handleSubscription(id) {
+        await api.post(`/subscriptions/${id}`);
+    }
+
     return (
         <Background>
             <Container>
@@ -45,21 +49,27 @@ export default function Dashboard() {
                     <Image source={logo} />
                 </Header>
                 <SelectionDate>
-                    <TouchableOpacity type="button" onClick={handlePrevDay}>
+                    <TouchableOpacity type="button" onPress={handlePrevDay}>
                         <Icon name="chevron-left" size={36} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, color: '#fff' }}>
                         {dateFormatted}
                     </Text>
-                    <TouchableOpacity type="button" onClick={handleNextDay}>
+                    <TouchableOpacity type="button" onPress={handleNextDay}>
                         <Icon name="chevron-right" size={36} color="#fff" />
                     </TouchableOpacity>
                 </SelectionDate>
 
                 <List
                     data={meetups}
-                    keyExtractor={key => String(key)}
-                    renderItem={({ item }) => <Meetup data={item} />}
+                    keyExtractor={key => String(key.id)}
+                    renderItem={({ item }) => (
+                        <Meetup
+                            label="Realizar inscrição"
+                            data={item}
+                            onSubmit={handleSubscription}
+                        />
+                    )}
                 />
             </Container>
         </Background>
