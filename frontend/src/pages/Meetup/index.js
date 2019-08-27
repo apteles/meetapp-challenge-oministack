@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import {
     MdModeEdit,
     MdDeleteForever,
@@ -25,14 +27,13 @@ export default function Meetup({ match }) {
 
     async function handleDelete() {}
 
-    const { id, title, description, location, date, banner } = meetup;
     return (
         <Container>
             <header>
-                <h1>{title}</h1>
+                <h1>{meetup.title}</h1>
 
                 <Actions>
-                    <Link to={`/meetup/${id}/edit`}>
+                    <Link to={`/meetup/${meetup.id}/edit`}>
                         <MdModeEdit size="22" color="#fff" />
                         Editar
                     </Link>
@@ -43,17 +44,20 @@ export default function Meetup({ match }) {
                 </Actions>
             </header>
             <section>
-                <img src={banner ? banner.url : ''} alt={title} />
-                <p>{description}</p>
+                <img
+                    src={meetup.banner ? meetup.banner.url : ''}
+                    alt={meetup.title}
+                />
+                <p>{meetup.description}</p>
 
                 <div>
                     <span>
                         <MdEvent size="20" color="#fff" />
-                        {date}
+                        {meetup.date}
                     </span>
                     <span>
                         <MdLocationOn size="20" color="#fff" />
-                        {location}
+                        {meetup.location}
                     </span>
                 </div>
             </section>

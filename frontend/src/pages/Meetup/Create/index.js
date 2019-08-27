@@ -36,7 +36,7 @@ export default function Create() {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <BannerInput name="banner_id" />
+                <BannerInput name="banner" />
                 <Input name="title" placeholder="Titulo do Meetup" />
                 <Textarea name="description" placeholder="Descrição completa" />
                 <Input name="date" type="date" placeholder="Data do meetup" />

@@ -4,11 +4,11 @@ import { useField } from '@rocketseat/unform';
 import api from '~/services/api';
 import { Container, ImageWrapper } from './styles';
 
-export default function BannerInput() {
-    const { defaultValue, registerField } = useField('banner');
+export default function BannerInput({ banner }) {
+    const { registerField } = useField('banner');
 
-    const [file, setFile] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [file, setFile] = useState(banner && banner.id);
+    const [preview, setPreview] = useState(banner && banner.url);
 
     const ref = useRef();
 
@@ -32,9 +32,7 @@ export default function BannerInput() {
         setFile(id);
         setPreview(url);
     }
-    if (!defaultValue) {
-        return null;
-    }
+
     return (
         <Container>
             <label htmlFor="banner">

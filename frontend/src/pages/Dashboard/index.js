@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import { MdKeyboardArrowRight, MdAddCircleOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
@@ -32,7 +34,13 @@ export default function DashBoard() {
                     <MeetupItem key={meetup.id}>
                         <p>{meetup.title}</p>
                         <div>
-                            <span>{meetup.date}</span>
+                            <span>
+                                {format(
+                                    parseISO(meetup.date),
+                                    "d 'de' MMMM ', às' h'h'",
+                                    { locale: pt }
+                                )}
+                            </span>
                             <Link to={`/meetup/${meetup.id}`}>
                                 <MdKeyboardArrowRight size="22" color="#fff" />
                             </Link>
