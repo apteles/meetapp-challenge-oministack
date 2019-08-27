@@ -3,7 +3,7 @@ import { Op } from 'sequelize';
 import Subscription from '../models/Subscription';
 import Meetup from '../models/Meetup';
 import User from '../models/User';
-
+import File from '../models/File';
 import Queue from '../../lib/Queue';
 import SubscriptionMail from '../jobs/SubscriptionMail';
 
@@ -65,6 +65,7 @@ class SubscriptionController {
       where: {
         user_id: req.userId,
       },
+      attributes: ['id', 'meetup_id', 'user_id'],
       include: [
         {
           model: Meetup,
@@ -73,7 +74,20 @@ class SubscriptionController {
               [Op.gt]: new Date(),
             },
           },
+          attributes: ['id', 'title', 'description', 'location', 'date'],
           required: true,
+          include: [
+            {
+              model: File,
+              as: 'banner',
+              attributes: ['id', 'url', 'name'],
+            },
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'name', 'email'],
+            },
+          ],
         },
       ],
       order: [[Meetup, 'date']],
@@ -132,6 +146,19 @@ class SubscriptionController {
     });
 
     return res.json(subscription);
+  }
+
+  async delete(req, res) {
+    const subscription = await Subscription.findByPk(req.params.id);
+
+    if (subscription.user_id !== req.userId) {
+      return res.status(401).json({
+        error: 'You cannot delete a meetup that was not created by you.',
+      });
+    }
+
+    const data = await subscription.destroy();
+    return res.json(data);
   }
 }
 

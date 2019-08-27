@@ -80,6 +80,11 @@ class MeetupController {
           model: User,
           as: 'user',
         },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'url', 'name'],
+        },
       ],
       limit: LIMIT_PER_PAGE,
       offset: LIMIT_PER_PAGE * page - LIMIT_PER_PAGE,
@@ -231,7 +236,11 @@ class MeetupController {
   async show(req, res) {
     const meetup = await Meetup.findByPk(req.params.id, {
       include: [
-        { model: File, as: 'banner', attributes: ['id', 'url', 'path','name'] },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'url', 'path', 'name'],
+        },
       ],
     });
 
