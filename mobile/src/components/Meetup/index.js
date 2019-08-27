@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Text } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +10,8 @@ import {
     Time,
     Location,
     Person,
-    Subscription
+    Subscription,
+    Text
 } from './styles';
 
 export default function Meetup({ data, onSubmit, label }) {
@@ -28,7 +28,7 @@ export default function Meetup({ data, onSubmit, label }) {
                 }}
             />
             <Info>
-                <Title>{data.title}</Title>
+                <Title>{`${data.title} #${data.id}`}</Title>
                 <Time>
                     <Icon name="event" size={20} color="#ccc" />
                     <Text>{dateFormatted}</Text>
