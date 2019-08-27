@@ -25,26 +25,24 @@ export const Title = styled.Text`
     font-weight: bold;
     margin-bottom: 10px;
 `;
-export const Time = styled.Text`
+export const Time = styled.View`
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
     font-size: 16px;
     color: #ccc;
 `;
-export const Location = styled.Text`
+export const Location = styled.View`
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
-    color: #ccc;
 `;
-export const Person = styled.Text`
+export const Person = styled.View`
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
-    color: #ccc;
 `;
 export const Subscription = styled.TouchableOpacity`
     width: 100%;
@@ -56,4 +54,10 @@ export const Subscription = styled.TouchableOpacity`
     background: #f94d6a;
     display: flex;
     align-items: center;
+`;
+
+export const Text = styled.Text`
+    font-size: 16px;
+    color: #ccc;
+    margin-left: 10px;
 `;
