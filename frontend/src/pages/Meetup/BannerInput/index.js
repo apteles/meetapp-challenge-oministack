@@ -4,18 +4,18 @@ import { useField } from '@rocketseat/unform';
 import api from '~/services/api';
 import { Container, ImageWrapper } from './styles';
 
-export default function BannerInput({ banner }) {
-    const { registerField } = useField('banner');
+export default function BannerInput() {
+    const { defaultValue, registerField } = useField('meetup');
 
-    const [file, setFile] = useState(banner && banner.id);
-    const [preview, setPreview] = useState(banner && banner.url);
+    const [file, setFile] = useState(defaultValue && defaultValue.id);
+    const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
     const ref = useRef();
 
     useEffect(() => {
         if (ref.current) {
             registerField({
-                name: 'banner',
+                name: 'banner_id',
                 ref: ref.current,
                 path: 'dataset.file',
             });
