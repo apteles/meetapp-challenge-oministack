@@ -11,18 +11,29 @@ import { Container, Header, List } from './styles';
 export default function Subscription({ navigation }) {
     const [subscriptions, setSubscriptions] = useState([]);
 
-    useEffect(() => {
-        async function loadSubscriptions() {
-            const response = await api.get('subscriptions');
-            setSubscriptions(response.data);
-        }
-
-        loadSubscriptions();
-    }, [navigation]);
+    async function loadSubscriptions() {
+        const response = await api.get('subscriptions');
+        setSubscriptions(response.data);
+    }
 
     async function handleSubscription(id) {
-        await api.delete(`subscriptions/${id}`);
+        const subscription = subscriptions.filter(
+            item => item.Meetup.id === id
+        );
+        await api.delete(`subscriptions/${subscription[0].id}`);
     }
+
+    useEffect(() => {
+        loadSubscriptions();
+
+        const listener = navigation.addListener('didFocus', () => {
+            loadSubscriptions();
+        });
+
+        return () => {
+            listener.remove();
+        };
+    }, [navigation]);
 
     return (
         <Background>
