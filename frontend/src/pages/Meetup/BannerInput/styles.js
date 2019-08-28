@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100%;
+    max-height: 300px;
     align-self: center;
     margin: 30px 0;
     label {
@@ -13,6 +14,12 @@ export const Container = styled.div`
 
         input {
             display: none;
+        }
+        div {
+            img {
+                width: 100%;
+                max-height: 300px;
+            }
         }
     }
 `;

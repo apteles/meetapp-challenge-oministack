@@ -25,6 +25,20 @@ export function meetupsSuccess(data) {
     };
 }
 
+export function updateMeetupRequest(data) {
+    return {
+        type: '@meetup/UPDATE_MEETUP_REQUEST',
+        payload: data,
+    };
+}
+
+export function updateMeetupSuccess(id, data) {
+    return {
+        type: '@meetup/UPDATE_MEETUP_SUCCESS',
+        payload: { id, ...data },
+    };
+}
+
 export function meetupFailure() {
     return {
         type: '@meetup/MEETUP_FAILURE',

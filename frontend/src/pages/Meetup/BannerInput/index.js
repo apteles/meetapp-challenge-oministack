@@ -5,13 +5,12 @@ import api from '~/services/api';
 import { Container, ImageWrapper } from './styles';
 
 export default function BannerInput() {
-    const { defaultValue, registerField } = useField('meetup');
+    const { defaultValue, registerField } = useField('banner');
 
     const [file, setFile] = useState(defaultValue && defaultValue.id);
     const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
     const ref = useRef();
-
     useEffect(() => {
         if (ref.current) {
             registerField({

@@ -23,6 +23,10 @@ export default function meetup(state = INITIAL_STATE, action) {
                 draft.meetups = action.payload;
                 break;
             }
+            case '@meetup/UPDATE_MEETUP_SUCCESS': {
+                draft.meetup = null;
+                break;
+            }
             default:
         }
     });

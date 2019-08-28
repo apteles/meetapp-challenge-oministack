@@ -4,7 +4,10 @@ import { Form, Input } from '@rocketseat/unform';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { Container } from '~/pages/Meetup/Create/styles';
 import BannerInput from '~/pages/Meetup/BannerInput';
-import { meetupRequest } from '~/store/modules/meetup/actions';
+import {
+    meetupRequest,
+    updateMeetupRequest,
+} from '~/store/modules/meetup/actions';
 
 export default function Edit({ match }) {
     const loading = useSelector(state => state.meetup.loading);
@@ -13,28 +16,34 @@ export default function Edit({ match }) {
 
     useEffect(() => {
         dispatch(meetupRequest(match.params.id));
-        console.tron.log(meetup);
     }, []); // eslint-disable-line
+
+    function handleSubmit({ title, description, location, date, banner_id }) {
+        const { id } = match.params;
+        dispatch(
+            updateMeetupRequest({
+                id,
+                title,
+                description,
+                location,
+                date,
+                banner_id,
+            })
+        );
+    }
 
     return (
         <Container>
             {loading ? (
                 'Carregando'
             ) : (
-                <Form initialData={meetup}>
+                <Form initialData={meetup} onSubmit={handleSubmit}>
                     <BannerInput name="banner_id" />
                     <Input name="title" placeholder="Titulo do Meetup" />
                     <Input
                         name="description"
                         multiline
                         placeholder="Descrição completa"
-                        // value={meetup.description}
-                        // onChange={e =>
-                        //     setMeetup({
-                        //         ...meetup,
-                        //         description: e.target.value,
-                        //     })
-                        // }
                     />
                     <Input name="date" placeholder="Data do meetup" />
                     <Input name="location" placeholder="Localização" />
