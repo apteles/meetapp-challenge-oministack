@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 import {
     MdModeEdit,
     MdDeleteForever,
@@ -19,6 +19,8 @@ export default function Meetup({ match }) {
         async function loadMeetup() {
             const response = await api.get(`/meetups/${params.id}`);
 
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            response.data.date = utcToZonedTime(response.data.date, timezone);
             setMeetup(response.data);
         }
 
@@ -53,7 +55,8 @@ export default function Meetup({ match }) {
                 <div>
                     <span>
                         <MdEvent size="20" color="#fff" />
-                        {meetup.date}
+                        {meetup.date &&
+                            format(meetup.date, "d 'de' MMMM ', às' h'h'")}
                     </span>
                     <span>
                         <MdLocationOn size="20" color="#fff" />

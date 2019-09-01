@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -9,7 +9,6 @@ import { Container, MeetupList, MeetupItem } from './styles';
 import { meetupsRequest } from '~/store/modules/meetup/actions';
 
 export default function DashBoard() {
-    // const [meetups, setMeetups] = useState([]);
     const dispatch = useDispatch();
     const loading = useSelector(state => state.meetup.loading);
     const meetups = useSelector(state => state.meetup.meetups);
