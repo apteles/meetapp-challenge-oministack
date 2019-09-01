@@ -10,6 +10,7 @@ import {
 } from 'react-icons/md';
 import { Container, Actions } from './styles';
 import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Meetup({ match }) {
     const [meetup, setMeetup] = useState({});
@@ -27,7 +28,10 @@ export default function Meetup({ match }) {
         loadMeetup();
     }, [params.id]);
 
-    async function handleDelete() {}
+    async function handleDelete() {
+        await api.delete(`/meetups/${params.id}`);
+        history.push('/');
+    }
 
     return (
         <Container>

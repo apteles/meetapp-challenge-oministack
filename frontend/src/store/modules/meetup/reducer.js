@@ -17,14 +17,6 @@ export default function meetup(state = INITIAL_STATE, action) {
             }
             case '@meetup/MEETUP_SUCCESS': {
                 draft.loading = false;
-                const timezone = Intl.DateTimeFormat().resolvedOptions()
-                    .timeZone;
-                action.payload.date = utcToZonedTime(
-                    action.payload.date,
-                    timezone
-                );
-
-                action.payload.date = format(action.payload.date, 'dd-MM-yyyy');
                 draft.meetup = action.payload;
                 break;
             }
