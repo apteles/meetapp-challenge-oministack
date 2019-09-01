@@ -8,6 +8,7 @@ import {
     meetupRequest,
     updateMeetupRequest,
 } from '~/store/modules/meetup/actions';
+import history from '~/services/history';
 
 export default function Edit({ match }) {
     const loading = useSelector(state => state.meetup.loading);
@@ -30,6 +31,7 @@ export default function Edit({ match }) {
                 banner_id,
             })
         );
+        history.push('/');
     }
 
     return (
